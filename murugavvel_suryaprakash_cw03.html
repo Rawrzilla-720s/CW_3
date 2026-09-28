@@ -80,13 +80,6 @@ body {
       <p>This paragraph demonstrates the dark red text colour applied via external CSS.</p>
     </div>
 
-    <h3>Note on scoping</h3>
-    <p>
-      The supplied rule targets <code>body</code>, so linking <code>styles.css</code> into this page directly
-      would repaint every paragraph in the document dark red. The same three declarations are therefore applied
-      to a <code>.demo-ex1</code> container above, while <code>styles.css</code> ships unmodified. This is a
-      specificity and scope decision, not a change to the required CSS.
-    </p>
   </div>
 </section>
 
@@ -287,13 +280,6 @@ body {
     margin-right: 4cm;
 }</code></pre>
 
-    <h3>Why separate the stylesheet</h3>
-    <p>
-      Moving presentation out of the markup means the lyric page contains only content and class names. The same
-      stylesheet can then style any number of song pages, and a colour change happens in one file rather than in
-      every document. In this submission the <code>body</code> rule is scoped to a <code>.lyrics-demo</code>
-      container for the same reason given in Exercise 1 &mdash; the unmodified file is still included.
-    </p>
   </div>
 </section>
 
@@ -357,11 +343,6 @@ body {
     </div>
 
     <h3>Asynchronous courses</h3>
-    <p>
-      Two courses carry no fixed meeting time, so placing them in the grid above would misrepresent the
-      schedule. They are listed separately and share the <code>.async</code> class, which keeps one colour
-      key across both tables.
-    </p>
     <table class="data">
       <caption>Courses with no scheduled meeting time</caption>
       <thead>
@@ -599,12 +580,9 @@ body {
 <section id="sources">
   <div class="wrap">
     <h2>Sources and Assistance Statement</h2>
-    <ul>
-      <li>MDN Web Docs &mdash; <cite>Specificity</cite>, <cite>box-sizing</cite>, and <cite>Using media queries</cite>.</li>
-      <li>W3C &mdash; <cite>Web Content Accessibility Guidelines 2.1</cite>, success criteria 1.4.1 (Use of Color) and 1.4.3 (Contrast Minimum).</li>
-      <li>Chrome DevTools &mdash; Computed panel, box-model diagram, device toolbar, and the colour-picker contrast readout.</li>
-      <li>Course materials for CSC 4370 Web Programming, Fall 2026.</li>
-    </ul>
+    <p>
+      TODO &mdash; state here what assistance you used on this assignment.
+    </p>
   </div>
 </section>
 
