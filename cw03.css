@@ -1,7 +1,6 @@
-/* cw03.css - CSS Foundations Lab
-   Suryaprakash Murugavvel, CSC 4370 Web Programming */
+/* cw03.css - styles for the CW 03 lab write-up */
 
-/* Colour scheme as CSS variables (Exercise 5 requirement) */
+/* Everything colour-related lives here so the theme can change in one place */
 :root {
   --ink:     #1f1f1f;
   --muted:   #6a6a6a;
@@ -181,8 +180,8 @@ figcaption {
   font-size: 0.86rem;
 }
 
-/* Exercise 1 scoped demo. styles.css targets body, which would recolour the
-   whole document, so the same declarations are scoped to this box instead. */
+/* styles.css targets body, so linking it would turn every paragraph on the
+   page dark red. Same declarations, scoped to one box instead. */
 .demo-ex1 {
   color: darkred;
   font-family: 'Roboto', sans-serif;
@@ -192,8 +191,7 @@ figcaption {
   padding: 16px;
 }
 
-/* Exercise 2 answer container: background, border, padding, text colour
-   and box-shadow are all required by the assignment. */
+/* Callout box for the debugging write-up */
 .debug-report {
   background-color: #fbfbfc;
   border: 1px solid #c3ccd2;
@@ -228,8 +226,8 @@ figcaption {
   color: var(--muted);
 }
 
-/* Exercises 3 and 4 scoped lyric demo. The six class rules are byte-identical
-   to lyrics.css; only the body rule is scoped so it does not repaint the page. */
+/* Lyric block. The class rules match lyrics.css exactly; only its body rule
+   is scoped here, to keep the chocolate background inside the box. */
 .lyrics-demo {
   background-color: chocolate;
   font-family: Arial, sans-serif;
@@ -284,7 +282,7 @@ figcaption {
   margin-right: 4cm;
 }
 
-/* Exercise 5 timetable */
+/* Timetable */
 .timetable {
   border-collapse: collapse;
   width: 100%;
@@ -329,7 +327,8 @@ table.data caption {
   color: var(--muted);
 }
 
-/* UG 04 revised states: colour plus a border-style cue and a text label */
+/* Adds a border-style cue on top of the fill so the session types are still
+   distinguishable without colour */
 .timetable.accessible .lecture,
 .timetable.accessible .lab,
 .timetable.accessible .async {
@@ -352,10 +351,10 @@ table.data caption {
   margin-right: 6px;
 }
 
-/* UG 01 cascade demo: three conflicting declarations on one element */
-blockquote      { color: #a3332b; }   /* element  (0,0,0,1) */
-.cascade-demo   { color: #b8860b; }   /* class    (0,0,1,0) */
-#cascade-target { color: #0b6b3a; }   /* id       (0,1,0,0) */
+/* One element, three selectors, three colours. The ID wins. */
+blockquote      { color: #a3332b; }   /* 0,0,0,1 */
+.cascade-demo   { color: #b8860b; }   /* 0,0,1,0 */
+#cascade-target { color: #0b6b3a; }   /* 0,1,0,0 */
 
 blockquote {
   margin: 0;
@@ -364,10 +363,8 @@ blockquote {
   font-size: 1.04rem;
 }
 
-/* UG 02 pixel budget panel.
-   Target: 420px rendered OUTER width at a 900px viewport, with no
-   `width: 420px` anywhere.  420 / 900 = 46.6667vw.
-   border-box -> padding and border sit inside the declared width. */
+/* 420px wide at a 900px viewport: 420 / 900 = 46.6667vw.
+   border-box keeps the padding and border inside that number. */
 .pixel-panel {
   box-sizing: border-box;
   width: 46.6667vw;
@@ -378,17 +375,15 @@ blockquote {
   font-size: 0.84rem;
 }
 
-/* Switch to content-box and recover 420px with a different declaration:
-   420 - (18 x 2) - (3 x 2) = 378px content -> 378 / 900 = 42vw */
+/* content-box adds padding and border on top of the width, so subtract them
+   first to land on the same 420px: 420 - 36 - 6 = 378px, which is 42vw. */
 .pixel-panel.content-box {
   box-sizing: content-box;
   width: 42vw;
 }
 
-/* UG 03 repair.
-   Comment this block out to reproduce the horizontal-overflow failure,
-   screenshot it, then restore it for the "after" capture. Bounded at
-   1000px so the desktop layout above that width is untouched. */
+/* Keeps the wide table's overflow inside its own wrapper instead of letting
+   it scroll the whole page. Comment out to see what it fixes. */
 @media screen and (max-width: 1000px) {
   .table-scroll {
     overflow-x: auto;
