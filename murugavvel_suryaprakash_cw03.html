@@ -25,6 +25,8 @@
       <li><a href="#ex3">Ex 3</a></li>
       <li><a href="#ex4">Ex 4</a></li>
       <li><a href="#ex5">Ex 5</a></li>
+      <li><a href="#thinking">Critical Thinking</a></li>
+      <li><a href="#evidence">Evidence</a></li>
       <li><a href="#sources">Sources</a></li>
     </ul>
   </div>
@@ -346,6 +348,247 @@ body {
       </tbody>
     </table>
     <p class="lead">Total registered hours: 15.</p>
+  </div>
+</section>
+
+<section id="thinking">
+  <div class="wrap">
+    <h2>Critical Thinking &mdash; Undergraduate Investigations</h2>
+    <p class="lead">Four investigations, each with its own measurements and evidence.</p>
+
+    <h3>UG 01 &mdash; Forensic Cascade Reconstruction</h3>
+    <p>
+      Three declarations in <code>cw03.css</code> set a colour on the same element, using an element selector,
+      a class selector and an ID selector:
+    </p>
+<pre><code>blockquote      { color: #a3332b; }   /* element */
+.cascade-demo   { color: #b8860b; }   /* class */
+#cascade-target { color: #0b6b3a; }   /* id */</code></pre>
+    <p>They all target this one element:</p>
+    <div class="cascade-box">
+      <blockquote id="cascade-target" class="cascade-demo">
+        Three rules compete for the colour of this sentence. Only one wins.
+      </blockquote>
+    </div>
+
+    <h4>Prediction, made before loading the page</h4>
+    <table class="data">
+      <thead>
+        <tr><th scope="col">Selector</th><th scope="col">Specificity (a,b,c,d)</th><th scope="col">Colour</th><th scope="col">Predicted rank</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>#cascade-target</code></td><td>0,1,0,0</td><td>#0b6b3a green</td><td>1st &mdash; wins</td></tr>
+        <tr><td><code>.cascade-demo</code></td><td>0,0,1,0</td><td>#b8860b gold</td><td>2nd &mdash; overridden</td></tr>
+        <tr><td><code>blockquote</code></td><td>0,0,0,1</td><td>#a3332b red</td><td>3rd &mdash; overridden</td></tr>
+      </tbody>
+    </table>
+    <p>
+      One ID outranks any number of classes, and one class outranks any number of element selectors, because
+      specificity compares column by column rather than by total count. Source order never comes into it here,
+      since no two selectors tie.
+    </p>
+
+    <div class="todo">
+      TODO &mdash; open DevTools on this element, screenshot the Computed panel with the two overridden rules
+      struck through, save it as <code>images/ug01-devtools.png</code>, and confirm the measured colour.
+      Add your hand-written specificity calculation and make sure your desktop clock is visible in the capture.
+    </div>
+
+    <h3>UG 02 &mdash; Pixel Budget Under Constraint</h3>
+    <p>
+      The panel below must render at exactly <strong>420px outer width at a 900px viewport</strong>, without any
+      <code>width: 420px</code> declaration. It uses a viewport-relative width instead:
+      <code>420 &divide; 900 = 46.6667vw</code>.
+    </p>
+    <div class="pixel-panel">
+      Pixel budget panel. Measure my outer width in the DevTools box-model diagram at a 900px viewport.
+    </div>
+
+    <h4>Box-model arithmetic</h4>
+    <table class="data">
+      <thead>
+        <tr><th scope="col">box-sizing</th><th scope="col">Declared width</th><th scope="col">Padding</th><th scope="col">Border</th><th scope="col">Outer width</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>border-box</code></td>
+          <td>46.6667vw = 420px</td><td>18px each side</td><td>3px each side</td>
+          <td>420px &mdash; padding and border sit inside the declared width</td>
+        </tr>
+        <tr>
+          <td><code>content-box</code></td>
+          <td>46.6667vw = 420px</td><td>18px each side</td><td>3px each side</td>
+          <td>420 + 36 + 6 = <strong>462px</strong> &mdash; overshoots by 42px</td>
+        </tr>
+        <tr>
+          <td><code>content-box</code> (recovered)</td>
+          <td>42vw = 378px</td><td>18px each side</td><td>3px each side</td>
+          <td>378 + 36 + 6 = <strong>420px</strong> &mdash; target restored</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Under <code>content-box</code> the declared width describes the content area only, so padding and border are
+      added on top. Recovering 420px means subtracting them from the declaration first:
+      <code>420 &minus; 36 &minus; 6 = 378px</code>, which is <code>42vw</code> at a 900px viewport.
+    </p>
+
+    <div class="todo">
+      TODO &mdash; in DevTools device mode set the viewport to exactly 900px, then capture three states in order.
+      <strong>(1)</strong> The panel as shipped: box model should read 420px outer
+      (<code>images/ug02-borderbox.png</code>).
+      <strong>(2)</strong> In the Styles panel edit <em>only</em> <code>box-sizing</code> to <code>content-box</code>,
+      leaving the width at <code>46.6667vw</code> &mdash; the outer width jumps to 462px.
+      <strong>(3)</strong> Now also change the width to <code>42vw</code> and confirm it returns to 420px
+      (<code>images/ug02-contentbox.png</code>). Adding the <code>.content-box</code> class does steps 2 and 3
+      at once, so edit the two declarations separately or you will never see the overshoot.
+    </div>
+
+    <h3>UG 03 &mdash; Breakpoint Failure Study</h3>
+    <p>
+      <strong>Test defined:</strong> the page fails if any content forces horizontal scrolling of the document,
+      because that makes the reader pan sideways to finish a line.
+    </p>
+    <p>
+      The timetable in Exercise 5 carries <code>min-width: 720px</code>, since six columns of class names cannot
+      compress further and stay readable. Once the viewport drops below roughly 770px &mdash; the 720px table plus
+      the page's 24px side padding and scrollbar allowance &mdash; the table pushes past the document edge and the
+      whole page scrolls sideways.
+    </p>
+    <p><strong>Repair,</strong> one media query, scoped so nothing above 1000px changes:</p>
+<pre><code>@media screen and (max-width: 1000px) {
+  .table-scroll { overflow-x: auto; }
+}</code></pre>
+    <p>
+      This confines the overflow to the table's own wrapper. The table still scrolls horizontally, but the document
+      does not, so every other section stays readable in a single column. Because the query is bounded at 1000px,
+      the desktop layout is untouched.
+    </p>
+
+    <div class="todo">
+      TODO &mdash; comment out the <code>.table-scroll</code> rule in <code>cw03.css</code>, narrow the viewport until
+      the document first scrolls sideways, and note that exact odd-numbered width. Capture the failure
+      (<code>images/ug03-before.png</code>), restore the rule, and recapture at the same width
+      (<code>images/ug03-after.png</code>). Then capture the desktop at 1200px to prove no regression
+      (<code>images/ug03-desktop.png</code>).
+    </div>
+
+    <h3>UG 04 &mdash; Colour Is Not the Message</h3>
+    <p>
+      The Exercise 5 timetable encodes session type purely as a background colour, so the meaning vanishes in
+      grayscale, in high-contrast mode, or for a reader with colour vision deficiency. The three fills are close in
+      luminance, which is exactly why they collapse into near-identical grays.
+    </p>
+
+    <h4>Contrast measurements</h4>
+    <table class="data">
+      <thead>
+        <tr><th scope="col">Pair</th><th scope="col">Foreground</th><th scope="col">Background</th><th scope="col">Ratio</th><th scope="col">AA normal text</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Lecture cell</td><td>#1f1f1f</td><td>#e4ebf2</td><td>TODO &mdash; measure</td><td>TODO</td></tr>
+        <tr><td>Asynchronous row</td><td>#1f1f1f</td><td>#f1ece3</td><td>TODO &mdash; measure</td><td>TODO</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Revised state system</h4>
+    <p>
+      The revised table below keeps the colour but adds two cues that survive grayscale: a written
+      label on every cell, and a left border whose <em>style</em> differs per type &mdash; solid for lecture,
+      double for lab, dashed for asynchronous.
+    </p>
+    <div class="table-scroll">
+      <table class="timetable accessible">
+        <caption>Revised timetable &mdash; colour plus text label plus border style</caption>
+        <thead>
+          <tr>
+            <th scope="col">Time</th><th scope="col">Monday</th><th scope="col">Tuesday</th>
+            <th scope="col">Wednesday</th><th scope="col">Thursday</th><th scope="col">Friday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">11:00 &ndash; 12:15</th>
+            <td></td>
+            <td class="lecture"><span class="tag">Lecture</span>Functional Neuroimaging</td>
+            <td></td>
+            <td class="lecture"><span class="tag">Lecture</span>Functional Neuroimaging</td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">12:30 &ndash; 2:15</th>
+            <td class="lab"><span class="tag">Lab</span>Digital Image Processing</td>
+            <td></td>
+            <td class="lab"><span class="tag">Lab</span>Digital Image Processing</td>
+            <td></td><td></td>
+          </tr>
+          <tr>
+            <th scope="row">2:30 &ndash; 4:15</th>
+            <td class="lecture"><span class="tag">Lecture</span>Web Programming</td>
+            <td></td>
+            <td class="lecture"><span class="tag">Lecture</span>Web Programming</td>
+            <td></td><td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      <strong>Which cue carries the meaning:</strong> the text label. Border style is a useful secondary signal, but
+      a dashed edge only means "asynchronous" to someone who has already learned the key, and hairline differences are
+      easy to miss at small sizes or low resolution. The written word needs no legend, survives grayscale and
+      high-contrast mode, and is the version a screen reader actually announces. Colour becomes decoration that
+      speeds up scanning for readers who can use it, rather than the sole carrier of the information.
+    </p>
+
+    <div class="todo">
+      TODO &mdash; measure both contrast pairs with the DevTools colour picker or WebAIM and fill in the table.
+      Capture the original table in grayscale (<code>images/ug04-grayscale.png</code>) to show the three types
+      becoming indistinguishable. Then have a classmate read the revised table and write their initials beside
+      their interpretation of the three states.
+    </div>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <h2>Evidence</h2>
+    <p class="lead">Captures supporting each investigation above.</p>
+
+    <figure>
+      <img src="images/ug01-devtools.png" alt="Chrome DevTools Computed panel showing the ID rule winning the colour cascade, with the element and class rules struck through, and the desktop clock visible">
+      <figcaption>UG 01 &mdash; Computed panel confirming <code>#cascade-target</code> wins. TODO: add this capture.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/ug02-borderbox.png" alt="DevTools box model diagram showing the panel at 420 pixels outer width with border-box sizing at a 900 pixel viewport">
+      <figcaption>UG 02 &mdash; box model under <code>border-box</code> at a 900px viewport. TODO: add this capture.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/ug02-contentbox.png" alt="DevTools box model diagram after switching to content-box sizing, showing the overshoot and then the recovered 420 pixel width">
+      <figcaption>UG 02 &mdash; the same panel under <code>content-box</code>. TODO: add this capture.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/ug03-before.png" alt="The page at the failure width showing the timetable forcing the whole document to scroll horizontally">
+      <figcaption>UG 03 &mdash; failure capture at the measured breakpoint. TODO: add this capture.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/ug03-after.png" alt="The same viewport width after the media query, with horizontal scrolling confined to the table wrapper">
+      <figcaption>UG 03 &mdash; after the repair, at the same width. TODO: add this capture.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/ug03-desktop.png" alt="The page at 1200 pixels wide showing the desktop layout unchanged by the media query">
+      <figcaption>UG 03 &mdash; desktop regression check at 1200px. TODO: add this capture.</figcaption>
+    </figure>
+
+    <figure>
+      <img src="images/ug04-grayscale.png" alt="The original colour-coded timetable rendered in grayscale, with the three session types nearly indistinguishable">
+      <figcaption>UG 04 &mdash; grayscale rendering of the original colour-only states. TODO: add this capture.</figcaption>
+    </figure>
   </div>
 </section>
 
