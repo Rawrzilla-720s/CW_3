@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exercise 2 Debug Bench</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; padding: 24px; background: #fafafc; color: #1b1b22; line-height: 1.6; }
+  h1 { font-size: 1.4rem; }
+  .case { border: 1px solid #d8d8e0; background: #fff; margin: 22px 0; padding: 18px; }
+  .case h2 { font-size: 1.05rem; margin: 0 0 4px; color: #4a2f8f; }
+  .how { font-size: 0.85rem; color: #5c5c6b; margin: 0 0 14px; }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .pane { border: 1px solid #e3e3ea; padding: 12px; }
+  .pane h3 { margin: 0 0 8px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: .07em; color: #5c5c6b; }
+  .bad  { border-top: 3px solid #c0392b; }
+  .good { border-top: 3px solid #1c7a3e; }
+  pre { background: #1e1e28; color: #e8e8f0; padding: 10px; font-size: .74rem; overflow-x: auto; }
+  @media (max-width: 700px) { .pair { grid-template-columns: 1fr; } }
+
+  /* CASE A - no generic fallback vs a proper stack */
+  .fontA-bad  { font-family: "Tymes New Romen"; font-size: 1.1rem; }
+  .fontA-good { font-family: "Tymes New Romen", Times, serif; font-size: 1.1rem; }
+
+  /* CASE B - one font-size for every heading level */
+  .hB-bad h1, .hB-bad h2, .hB-bad h3 { color: #ff0000; font-size: 2.5em; margin: 20px 0px 20px 0px; }
+  .hB-good h1 { font-size: 2em; margin: 20px 0; }
+  .hB-good h2 { font-size: 1.5em; margin: 18px 0; }
+  .hB-good h3 { font-size: 1.17em; margin: 16px 0; }
+  .hB-good h1, .hB-good h2, .hB-good h3 { color: #b3000f; }
+
+  /* CASE C - what a missing semicolon does to the NEXT declaration */
+  .semi-bad  { padding: 10px; background: ivory; color: red font-weight: bold; border: 1px solid #ccc; }
+  .semi-good { padding: 10px; background: ivory; color: red; font-weight: bold; border: 1px solid #ccc; }
+
+  /* CASE D - contrast of the original red on ivory */
+  .swatch { padding: 14px; font-size: 1rem; border: 1px solid #ccc; }
+  .sw-bad  { background: ivory; color: #ff0000; }
+  .sw-good { background: ivory; color: #8a0000; }
+</style>
+</head>
+<body>
+
+<h1>Exercise 2 &mdash; Debug Bench</h1>
+<p class="how">Four candidate defects from the supplied CSS. Open DevTools, inspect each left-hand pane,
+and confirm the effect yourself before writing it up. Pick the three you can defend.</p>
+
+<section class="case">
+  <h2>Candidate A &mdash; font-family with no generic fallback</h2>
+  <p class="how">Original: <code>font-family: "Times New Roman";</code> &mdash; a single named font and no fallback.
+  Both panes below request a deliberately misspelled font so you can see what happens when it is unavailable.</p>
+  <div class="pair">
+    <div class="pane bad"><h3>No fallback</h3><p class="fontA-bad">The quick brown fox jumps over the lazy dog.</p></div>
+    <div class="pane good"><h3>With fallback stack</h3><p class="fontA-good">The quick brown fox jumps over the lazy dog.</p></div>
+  </div>
+  <p class="how">Check the Computed panel &rarr; <code>font-family</code>, and the Rendered Fonts readout at the bottom
+  of the Computed tab. Note which actual font each pane resolved to.</p>
+</section>
+
+<section class="case">
+  <h2>Candidate B &mdash; one font-size for h1, h2 and h3</h2>
+  <p class="how">Original: <code>h1, h2, h3 { font-size: 2.5em; }</code> &mdash; grouping all three levels makes them render identically.</p>
+  <div class="pair">
+    <div class="pane bad hB-bad"><h3>Grouped</h3><h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3></div>
+    <div class="pane good hB-good"><h3>Distinct scale</h3><h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3></div>
+  </div>
+  <p class="how">Measure the computed <code>font-size</code> in px for each heading on the left. Document the three
+  identical values &mdash; that measured number is your evidence.</p>
+</section>
+
+<section class="case">
+  <h2>Candidate C &mdash; missing semicolon</h2>
+  <p class="how">Original ends <code>color: red</code> and <code>box-sizing: border-box</code> with no semicolon.
+  Legal on the final declaration, but it silently destroys the next one added. The left pane shows exactly that.</p>
+  <div class="pair">
+    <div class="pane bad"><h3>Missing semicolon</h3><p class="semi-bad">Should be red AND bold.</p></div>
+    <div class="pane good"><h3>Semicolon present</h3><p class="semi-good">Red and bold.</p></div>
+  </div>
+  <p class="how">In the Styles panel the left rule shows <strong>both</strong> <code>color</code> and
+  <code>font-weight</code> struck through as invalid. Screenshot that &mdash; it is the cleanest evidence in this exercise.</p>
+</section>
+
+<section class="case">
+  <h2>Candidate D &mdash; pure red on ivory fails contrast</h2>
+  <p class="how">Original: <code>color: red</code> on <code>background: ivory</code>.</p>
+  <div class="pair">
+    <div class="pane bad"><h3>#ff0000 on ivory</h3><p class="swatch sw-bad">Body text at normal size.</p></div>
+    <div class="pane good"><h3>#8a0000 on ivory</h3><p class="swatch sw-good">Body text at normal size.</p></div>
+  </div>
+  <p class="how">Hover the colour swatch in the DevTools Styles panel &mdash; Chrome prints the contrast ratio and
+  whether it clears AA. Record both numbers.</p>
+</section>
+
+</body>
+</html>
