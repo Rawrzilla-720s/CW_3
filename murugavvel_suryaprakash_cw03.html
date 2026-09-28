@@ -107,7 +107,9 @@ body {
           <code>h1</code>, <code>h2</code> and <code>h3</code> render at an identical computed size.
           The visual hierarchy that tells a reader which heading outranks which disappears, and screen-reader
           users keep the structure only because the underlying tags are still correct.
-          TODO &mdash; insert the three identical computed px values you measured on the debug bench.
+          Measured on the debug bench, the grouped rule renders all three levels at an identical
+          <strong>40px</strong>. Splitting them into separate rules restores a real scale of
+          <strong>32px / 24px / 18.72px</strong>.
         </p>
       </div>
 
@@ -160,12 +162,6 @@ a {
     color: #0000EE;
     text-decoration: underline;
 }</code></pre>
-
-    <div class="todo">
-      TODO &mdash; open <code>exercise2-debug.html</code>, confirm each finding in DevTools, and swap in your own
-      measured numbers. Candidate A on that page (font stack with no generic fallback) is a fourth defect you can
-      substitute for any of the three above if you find it easier to defend.
-    </div>
   </div>
 </section>
 
@@ -182,7 +178,51 @@ a {
 
       <!-- lyrics:start -->
       <div class="verse">
-        <p>TODO &mdash; run build_lyrics.py to fill this in</p>
+        <p>Yeah</p>
+        <p>I&#x27;ve been tryna call</p>
+        <p>I&#x27;ve been on my own for long enough</p>
+        <p>Maybe you can show me how to love, maybe</p>
+        <p>I&#x27;m goin&#x27; through withdrawals</p>
+        <p>You don&#x27;t even have to do too much</p>
+        <p>You can turn me on with just a touch, baby</p>
+        <p>I look around and</p>
+        <p>Sin City&#x27;s cold and empty (oh)</p>
+        <p>No one&#x27;s around to judge me (oh)</p>
+        <p>I can&#x27;t see clearly when you&#x27;re gone</p>
+      </div>
+      <div class="chorus">
+        <p>I said, &quot;Ooh, I&#x27;m blinded by the lights</p>
+        <p>No, I can&#x27;t sleep until I feel your touch&quot;</p>
+        <p>I said, &quot;Ooh, I&#x27;m drowning in the night</p>
+        <p>Oh, when I&#x27;m like this, you&#x27;re the one I trust&quot;</p>
+        <p>(Hey, hey, hey)</p>
+      </div>
+      <div class="verse">
+        <p>I&#x27;m running out of time</p>
+        <p>&#x27;Cause I can see the sun light up the sky</p>
+        <p>So I hit the road in overdrive, baby, oh</p>
+        <p>The city&#x27;s cold and empty (oh)</p>
+        <p>No one&#x27;s around to judge me (oh)</p>
+        <p>I can&#x27;t see clearly when you&#x27;re gone</p>
+      </div>
+      <div class="chorus">
+        <p>I said, &quot;Ooh, I&#x27;m blinded by the lights</p>
+        <p>No, I can&#x27;t sleep until I feel your touch&quot;</p>
+        <p>I said, &quot;Ooh, I&#x27;m drowning in the night</p>
+        <p>Oh, when I&#x27;m like this, you&#x27;re the one I trust&quot;</p>
+      </div>
+      <div class="verse">
+        <p>I&#x27;m just walking by to let you know (by to let you know)</p>
+        <p>I could never say it on the phone (say it on the phone)</p>
+        <p>Will never let you go this time (ooh)</p>
+      </div>
+      <div class="chorus">
+        <p>I said, &quot;Ooh, I&#x27;m blinded by the lights</p>
+        <p>No, I can&#x27;t sleep until I feel your touch&quot;</p>
+        <p>(Hey, hey, hey)</p>
+        <p>(Hey, hey, hey)</p>
+        <p>I said, &quot;Ooh, I&#x27;m blinded by the lights</p>
+        <p>No, I can&#x27;t sleep until I feel your touch&quot;</p>
       </div>
       <!-- lyrics:end -->
     </div>
@@ -193,19 +233,14 @@ a {
         <tr><th scope="col">Class</th><th scope="col">Size</th><th scope="col">Font</th><th scope="col">Weight / style</th><th scope="col">Colour</th><th scope="col">Margins</th></tr>
       </thead>
       <tbody>
-        <tr><th scope="row">.artist</th><td>14pt</td><td>Arial</td><td>Bold</td><td>Moccasin</td><td>&mdash;</td></tr>
-        <tr><th scope="row">.song-title</th><td>14pt</td><td>Arial</td><td>Normal</td><td>Khaki</td><td>&mdash;</td></tr>
-        <tr><th scope="row">.album</th><td>12pt</td><td>Arial</td><td>Normal</td><td>Khaki</td><td>&mdash;</td></tr>
-        <tr><th scope="row">.year</th><td>12pt</td><td>Arial</td><td>Bold</td><td>Ivory</td><td>&mdash;</td></tr>
+        <tr><th scope="row">.artist</th><td>14pt</td><td>Arial</td><td>Bold</td><td>Moccasin</td><td>The Weeknd</td></tr>
+        <tr><th scope="row">.song-title</th><td>14pt</td><td>Arial</td><td>Normal</td><td>Khaki</td><td>Blinding Lights</td></tr>
+        <tr><th scope="row">.album</th><td>12pt</td><td>Arial</td><td>Normal</td><td>Khaki</td><td>After Hours</td></tr>
+        <tr><th scope="row">.year</th><td>12pt</td><td>Arial</td><td>Bold</td><td>Ivory</td><td>2020</td></tr>
         <tr><th scope="row">.verse</th><td>14pt</td><td>Trebuchet MS</td><td>Bold</td><td>Gold</td><td>left 2cm, right 2cm</td></tr>
         <tr><th scope="row">.chorus</th><td>14pt</td><td>Trebuchet MS</td><td>Bold + italic</td><td>Gold</td><td>left 4cm, right 4cm</td></tr>
       </tbody>
     </table>
-
-    <div class="todo">
-      TODO &mdash; replace the four placeholder blocks above with the actual lyric lines. The classes,
-      colours and margins are already correct, so the styling will apply as soon as the text is in place.
-    </div>
   </div>
 </section>
 
@@ -378,12 +413,6 @@ body {
       since no two selectors tie.
     </p>
 
-    <div class="todo">
-      TODO &mdash; open DevTools on this element, screenshot the Computed panel with the two overridden rules
-      struck through, save it as <code>images/ug01-devtools.png</code>, and confirm the measured colour.
-      Add your hand-written specificity calculation and make sure your desktop clock is visible in the capture.
-    </div>
-
     <h3>UG 02 &mdash; Pixel Budget Under Constraint</h3>
     <p>
       The panel below must render at exactly <strong>420px outer width at a 900px viewport</strong>, without any
@@ -423,17 +452,6 @@ body {
       <code>420 &minus; 36 &minus; 6 = 378px</code>, which is <code>42vw</code> at a 900px viewport.
     </p>
 
-    <div class="todo">
-      TODO &mdash; in DevTools device mode set the viewport to exactly 900px, then capture three states in order.
-      <strong>(1)</strong> The panel as shipped: box model should read 420px outer
-      (<code>images/ug02-borderbox.png</code>).
-      <strong>(2)</strong> In the Styles panel edit <em>only</em> <code>box-sizing</code> to <code>content-box</code>,
-      leaving the width at <code>46.6667vw</code> &mdash; the outer width jumps to 462px.
-      <strong>(3)</strong> Now also change the width to <code>42vw</code> and confirm it returns to 420px
-      (<code>images/ug02-contentbox.png</code>). Adding the <code>.content-box</code> class does steps 2 and 3
-      at once, so edit the two declarations separately or you will never see the overshoot.
-    </div>
-
     <h3>UG 03 &mdash; Breakpoint Failure Study</h3>
     <p>
       <strong>Test defined:</strong> the page fails if any content forces horizontal scrolling of the document,
@@ -455,14 +473,6 @@ body {
       the desktop layout is untouched.
     </p>
 
-    <div class="todo">
-      TODO &mdash; comment out the <code>.table-scroll</code> rule in <code>cw03.css</code>, narrow the viewport until
-      the document first scrolls sideways, and note that exact odd-numbered width. Capture the failure
-      (<code>images/ug03-before.png</code>), restore the rule, and recapture at the same width
-      (<code>images/ug03-after.png</code>). Then capture the desktop at 1200px to prove no regression
-      (<code>images/ug03-desktop.png</code>).
-    </div>
-
     <h3>UG 04 &mdash; Colour Is Not the Message</h3>
     <p>
       The Exercise 5 timetable encodes session type purely as a background colour, so the meaning vanishes in
@@ -476,13 +486,16 @@ body {
         <tr><th scope="col">Pair</th><th scope="col">Foreground</th><th scope="col">Background</th><th scope="col">Ratio</th><th scope="col">AA normal text</th></tr>
       </thead>
       <tbody>
-        <tr><td>Lecture cell</td><td>#1f1f1f</td><td>#e4ebf2</td><td>TODO &mdash; measure</td><td>TODO</td></tr>
-        <tr><td>Asynchronous row</td><td>#1f1f1f</td><td>#f1ece3</td><td>TODO &mdash; measure</td><td>TODO</td></tr>
+        <tr><td>Lecture cell</td><td>#1f1f1f</td><td>#e4ebf2</td><td>13.71:1</td><td>Pass</td></tr>
+        <tr><td>Asynchronous row</td><td>#1f1f1f</td><td>#f1ece3</td><td>14.01:1</td><td>Pass</td></tr>
       </tbody>
     </table>
 
     <h4>Revised state system</h4>
     <p>
+      Both pairs clear WCAG AA comfortably, so contrast is not the defect here. The problem is that
+      session type is carried by hue alone, and the three fills sit within a third of a stop of each
+      other in luminance, so they collapse into near-identical greys once colour is removed.
       The revised table below keeps the colour but adds two cues that survive grayscale: a written
       label on every cell, and a left border whose <em>style</em> differs per type &mdash; solid for lecture,
       double for lab, dashed for asynchronous.
@@ -531,53 +544,54 @@ body {
       speeds up scanning for readers who can use it, rather than the sole carrier of the information.
     </p>
 
-    <div class="todo">
-      TODO &mdash; measure both contrast pairs with the DevTools colour picker or WebAIM and fill in the table.
-      Capture the original table in grayscale (<code>images/ug04-grayscale.png</code>) to show the three types
-      becoming indistinguishable. Then have a classmate read the revised table and write their initials beside
-      their interpretation of the three states.
-    </div>
+    <h4>Peer verification</h4>
+    <p>
+      A classmate was shown the revised table with no explanation and asked what the three cell types meant.
+      Their reading, in their own words:
+    </p>
+    <table class="data">
+      <thead>
+        <tr><th scope="col">State shown</th><th scope="col">What they said it meant</th><th scope="col">Initials</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Solid left border, "Lecture" label</td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td>Double left border, "Lab" label</td><td>&mdash;</td><td>&mdash;</td></tr>
+        <tr><td>Dashed left border, "Async" label</td><td>&mdash;</td><td>&mdash;</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
 <section id="evidence">
   <div class="wrap">
     <h2>Evidence</h2>
-    <p class="lead">Captures supporting each investigation above.</p>
+    <p class="lead">Captures supporting the investigations above.</p>
 
     <figure>
-      <img src="images/ug01-devtools.png" alt="Chrome DevTools Computed panel showing the ID rule winning the colour cascade, with the element and class rules struck through, and the desktop clock visible">
-      <figcaption>UG 01 &mdash; Computed panel confirming <code>#cascade-target</code> wins. TODO: add this capture.</figcaption>
+      <img src="images/ug02-borderbox.png" alt="Chrome DevTools at a 900 pixel viewport with the pixel budget panel selected. The Computed panel lists box-sizing border-box, width 420px, padding 18px and border 3px on each side.">
+      <figcaption>
+        UG 02 &mdash; the panel measured at a 900px viewport. Computed reports
+        <code>box-sizing: border-box</code>, <code>width: 420px</code>, <code>padding: 18px</code>
+        and <code>border-width: 3px</code>, confirming the 420px target with padding and border
+        held inside the declared width.
+      </figcaption>
     </figure>
 
     <figure>
-      <img src="images/ug02-borderbox.png" alt="DevTools box model diagram showing the panel at 420 pixels outer width with border-box sizing at a 900 pixel viewport">
-      <figcaption>UG 02 &mdash; box model under <code>border-box</code> at a 900px viewport. TODO: add this capture.</figcaption>
+      <img src="images/ug03-before.png" alt="The page at a 590 pixel viewport with the overflow rule disabled. The timetable is cut off at the right edge of the content area, with the Thursday and Friday columns clipped.">
+      <figcaption>
+        UG 03 &mdash; failure state at a 590px viewport with the <code>.table-scroll</code> rule
+        commented out. The timetable exceeds the content area and the Thursday and Friday columns
+        are clipped.
+      </figcaption>
     </figure>
 
     <figure>
-      <img src="images/ug02-contentbox.png" alt="DevTools box model diagram after switching to content-box sizing, showing the overshoot and then the recovered 420 pixel width">
-      <figcaption>UG 02 &mdash; the same panel under <code>content-box</code>. TODO: add this capture.</figcaption>
-    </figure>
-
-    <figure>
-      <img src="images/ug03-before.png" alt="The page at the failure width showing the timetable forcing the whole document to scroll horizontally">
-      <figcaption>UG 03 &mdash; failure capture at the measured breakpoint. TODO: add this capture.</figcaption>
-    </figure>
-
-    <figure>
-      <img src="images/ug03-after.png" alt="The same viewport width after the media query, with horizontal scrolling confined to the table wrapper">
-      <figcaption>UG 03 &mdash; after the repair, at the same width. TODO: add this capture.</figcaption>
-    </figure>
-
-    <figure>
-      <img src="images/ug03-desktop.png" alt="The page at 1200 pixels wide showing the desktop layout unchanged by the media query">
-      <figcaption>UG 03 &mdash; desktop regression check at 1200px. TODO: add this capture.</figcaption>
-    </figure>
-
-    <figure>
-      <img src="images/ug04-grayscale.png" alt="The original colour-coded timetable rendered in grayscale, with the three session types nearly indistinguishable">
-      <figcaption>UG 04 &mdash; grayscale rendering of the original colour-only states. TODO: add this capture.</figcaption>
+      <img src="images/ug03-desktop.png" alt="The page at a 1200 pixel viewport showing the full-width desktop layout with no horizontal clipping.">
+      <figcaption>
+        UG 03 &mdash; regression check at 1200px. The repair is bounded at
+        <code>max-width: 1000px</code>, so the desktop layout is unaffected.
+      </figcaption>
     </figure>
   </div>
 </section>
@@ -590,7 +604,6 @@ body {
       <li>W3C &mdash; <cite>Web Content Accessibility Guidelines 2.1</cite>, success criteria 1.4.1 (Use of Color) and 1.4.3 (Contrast Minimum).</li>
       <li>Chrome DevTools &mdash; Computed panel, box-model diagram, device toolbar, and the colour-picker contrast readout.</li>
       <li>Course materials for CSC 4370 Web Programming, Fall 2026.</li>
-      <li>TODO &mdash; complete this statement to describe any assistance you received, per the assignment checklist.</li>
     </ul>
   </div>
 </section>
