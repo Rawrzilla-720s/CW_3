@@ -1,6 +1,4 @@
-/* cw03.css - styles for the CW 03 lab write-up */
-
-/* Everything colour-related lives here so the theme can change in one place */
+/* Palette */
 :root {
   --ink:     #1f1f1f;
   --muted:   #6a6a6a;
@@ -172,8 +170,7 @@ figcaption {
   font-family: Arial, sans-serif;
 }
 
-/* styles.css targets body, so linking it would turn every paragraph on the
-   page dark red. Same declarations, scoped to one box instead. */
+/* Scoped copy of the styles.css body rule so it only hits this box */
 .demo-ex1 {
   color: darkred;
   font-family: 'Roboto', sans-serif;
@@ -183,7 +180,6 @@ figcaption {
   padding: 16px;
 }
 
-/* Callout box for the debugging write-up */
 .debug-report {
   background-color: #fbfbfc;
   border: 1px solid #c3ccd2;
@@ -218,8 +214,7 @@ figcaption {
   color: var(--muted);
 }
 
-/* Lyric block. The class rules match lyrics.css exactly; only its body rule
-   is scoped here, to keep the chocolate background inside the box. */
+/* Same rules as lyrics.css, with its body rule scoped to this box */
 .lyrics-demo {
   background-color: chocolate;
   font-family: Arial, sans-serif;
@@ -274,7 +269,6 @@ figcaption {
   margin-right: 4cm;
 }
 
-/* Timetable */
 .timetable {
   border-collapse: collapse;
   width: 100%;
@@ -319,8 +313,7 @@ table.data caption {
   color: var(--muted);
 }
 
-/* Adds a border-style cue on top of the fill so the session types are still
-   distinguishable without colour */
+/* Border style doubles as a cue for when colour is unavailable */
 .timetable.accessible .lecture,
 .timetable.accessible .lab,
 .timetable.accessible .async {
@@ -343,7 +336,7 @@ table.data caption {
   margin-right: 6px;
 }
 
-/* One element, three selectors, three colours. The ID wins. */
+/* Same element, three selectors. The ID wins. */
 blockquote      { color: #a3332b; }   /* 0,0,0,1 */
 .cascade-demo   { color: #b8860b; }   /* 0,0,1,0 */
 #cascade-target { color: #0b6b3a; }   /* 0,1,0,0 */
@@ -355,8 +348,7 @@ blockquote {
   font-size: 1.04rem;
 }
 
-/* 420px wide at a 900px viewport: 420 / 900 = 46.6667vw.
-   border-box keeps the padding and border inside that number. */
+/* 420 / 900 = 46.6667vw; border-box keeps padding and border inside it */
 .pixel-panel {
   box-sizing: border-box;
   width: 46.6667vw;
@@ -367,15 +359,13 @@ blockquote {
   font-size: 0.84rem;
 }
 
-/* content-box adds padding and border on top of the width, so subtract them
-   first to land on the same 420px: 420 - 36 - 6 = 378px, which is 42vw. */
+/* content-box adds them on top, so: 420 - 36 - 6 = 378px = 42vw */
 .pixel-panel.content-box {
   box-sizing: content-box;
   width: 42vw;
 }
 
-/* Keeps the wide table's overflow inside its own wrapper instead of letting
-   it scroll the whole page. Comment out to see what it fixes. */
+/* Keep the table's overflow in its wrapper, not on the page */
 @media screen and (max-width: 1000px) {
   .table-scroll {
     overflow-x: auto;
