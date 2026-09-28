@@ -1,0 +1,432 @@
+/* cw03.css - CSS Foundations Lab
+   Suryaprakash Murugavvel, CSC 4370 Web Programming */
+
+/* Colour scheme as CSS variables (Exercise 5 requirement) */
+:root {
+  --ink:     #1f1f1f;
+  --muted:   #6a6a6a;
+  --line:    #d9d9d9;
+  --page:    #ffffff;
+  --panel:   #f4f4f5;
+  --accent:  #2f4858;
+  --shade:   #e8ebed;
+
+  --lecture: #e4ebf2;
+  --lab:     #e6eee7;
+  --async:   #f1ece3;
+}
+
+body {
+  margin: 0;
+  background-color: var(--page);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.65;
+}
+
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+header.doc-head {
+  border-bottom: 3px solid var(--ink);
+  padding: 34px 0 22px;
+}
+
+header.doc-head h1 {
+  margin: 0 0 6px;
+  font-size: 1.8rem;
+}
+
+.meta {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+nav.toc {
+  background-color: var(--panel);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+nav.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-family: Arial, sans-serif;
+  font-size: 0.84rem;
+}
+
+nav.toc a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  padding: 4px 0;
+  display: inline-block;
+}
+
+nav.toc a:hover,
+nav.toc a:focus {
+  border-bottom-color: var(--accent);
+}
+
+section {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin: 0 0 4px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+h3 {
+  font-size: 1.08rem;
+  margin: 24px 0 8px;
+}
+
+h4 {
+  font-size: 0.97rem;
+  margin: 0 0 6px;
+  font-family: Arial, sans-serif;
+}
+
+a {
+  color: var(--accent);
+}
+
+.lead {
+  color: var(--muted);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+pre {
+  background-color: var(--panel);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+}
+
+p code,
+li code,
+td code {
+  background-color: var(--panel);
+  padding: 1px 5px;
+  font-size: 0.88em;
+}
+
+table.data {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  font-size: 0.86rem;
+}
+
+table.data th,
+table.data td {
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+table.data thead th {
+  background-color: var(--shade);
+}
+
+figure {
+  margin: 20px 0;
+  border: 1px solid var(--line);
+  padding: 12px;
+}
+
+figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+}
+
+figcaption {
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin-top: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.todo {
+  background-color: var(--panel);
+  border-left: 3px solid var(--muted);
+  padding: 12px 16px;
+  font-family: Arial, sans-serif;
+  font-size: 0.86rem;
+}
+
+/* Exercise 1 scoped demo. styles.css targets body, which would recolour the
+   whole document, so the same declarations are scoped to this box instead. */
+.demo-ex1 {
+  color: darkred;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  background-color: var(--panel);
+  border: 1px solid var(--line);
+  padding: 16px;
+}
+
+/* Exercise 2 answer container: background, border, padding, text colour
+   and box-shadow are all required by the assignment. */
+.debug-report {
+  background-color: #fbfbfc;
+  border: 1px solid #c3ccd2;
+  padding: 24px;
+  color: var(--ink);
+  box-shadow: 0 2px 6px rgba(31, 31, 31, 0.14);
+}
+
+.debug-report h3 {
+  margin-top: 0;
+}
+
+.finding {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+
+.finding:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.label {
+  display: inline-block;
+  min-width: 78px;
+  font-family: Arial, sans-serif;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* Exercises 3 and 4 scoped lyric demo. The six class rules are byte-identical
+   to lyrics.css; only the body rule is scoped so it does not repaint the page. */
+.lyrics-demo {
+  background-color: chocolate;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  border: 1px solid var(--line);
+}
+
+.artist {
+  font-size: 14pt;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: moccasin;
+}
+
+.song-title {
+  font-size: 14pt;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+  color: khaki;
+}
+
+.album {
+  font-size: 12pt;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+  color: khaki;
+}
+
+.year {
+  font-size: 12pt;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  color: ivory;
+}
+
+.verse {
+  font-size: 14pt;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  color: gold;
+  margin-left: 2cm;
+  margin-right: 2cm;
+}
+
+.chorus {
+  font-size: 14pt;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  color: gold;
+  margin-left: 4cm;
+  margin-right: 4cm;
+}
+
+/* Exercise 5 timetable */
+.timetable {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 720px;
+  font-family: Arial, sans-serif;
+  font-size: 0.84rem;
+}
+
+.timetable caption,
+table.data caption {
+  text-align: left;
+  font-weight: bold;
+  padding-bottom: 10px;
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
+.timetable th,
+.timetable td {
+  border: 1px solid var(--line);
+  padding: 9px 10px;
+  text-align: left;
+}
+
+.timetable thead th {
+  background-color: var(--shade);
+}
+
+.timetable tbody th {
+  background-color: var(--panel);
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+.lecture { background-color: var(--lecture); }
+.lab     { background-color: var(--lab); }
+.async   { background-color: var(--async); }
+
+.course-code {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+/* UG 04 revised states: colour plus a border-style cue and a text label */
+.timetable.accessible .lecture,
+.timetable.accessible .lab,
+.timetable.accessible .async {
+  border-left-width: 6px;
+  border-left-style: solid;
+}
+
+.timetable.accessible .lecture { border-left-color: #1d3f5c; }
+.timetable.accessible .lab     { border-left-color: #2b5733; border-left-style: double; }
+.timetable.accessible .async   { border-left-color: #7a5320; border-left-style: dashed; }
+
+.tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid currentColor;
+  padding: 0 4px;
+  margin-right: 6px;
+}
+
+/* UG 01 cascade demo: three conflicting declarations on one element */
+blockquote      { color: #a3332b; }   /* element  (0,0,0,1) */
+.cascade-demo   { color: #b8860b; }   /* class    (0,0,1,0) */
+#cascade-target { color: #0b6b3a; }   /* id       (0,1,0,0) */
+
+blockquote {
+  margin: 0;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  font-size: 1.04rem;
+}
+
+/* UG 02 pixel budget panel.
+   Target: 420px rendered OUTER width at a 900px viewport, with no
+   `width: 420px` anywhere.  420 / 900 = 46.6667vw.
+   border-box -> padding and border sit inside the declared width. */
+.pixel-panel {
+  box-sizing: border-box;
+  width: 46.6667vw;
+  padding: 18px;
+  border: 3px solid var(--accent);
+  background-color: var(--panel);
+  font-family: Arial, sans-serif;
+  font-size: 0.84rem;
+}
+
+/* Switch to content-box and recover 420px with a different declaration:
+   420 - (18 x 2) - (3 x 2) = 378px content -> 378 / 900 = 42vw */
+.pixel-panel.content-box {
+  box-sizing: content-box;
+  width: 42vw;
+}
+
+/* UG 03 repair.
+   Comment this block out to reproduce the horizontal-overflow failure,
+   screenshot it, then restore it for the "after" capture. Bounded at
+   1000px so the desktop layout above that width is untouched. */
+@media screen and (max-width: 1000px) {
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  nav.toc ul {
+    gap: 12px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .wrap {
+    padding: 0 16px;
+  }
+
+  .verse,
+  .chorus {
+    margin-left: 0.5cm;
+    margin-right: 0.5cm;
+  }
+
+  header.doc-head h1 {
+    font-size: 1.4rem;
+  }
+}
+
+@media print {
+  nav.toc { display: none; }
+  body { color: #000000; background-color: #ffffff; }
+}
+
+footer {
+  padding: 24px 0 40px;
+}
+
+.foot-line {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
