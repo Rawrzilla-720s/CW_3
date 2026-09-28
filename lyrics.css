@@ -1,0 +1,54 @@
+/* lyrics.css - external stylesheet for the song lyrics page (Exercise 4) */
+body {
+    background-color: chocolate;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.artist {
+    font-size: 14pt;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: moccasin;
+}
+
+.song-title {
+    font-size: 14pt;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    color: khaki;
+}
+
+.album {
+    font-size: 12pt;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    color: khaki;
+}
+
+.year {
+    font-size: 12pt;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: ivory;
+}
+
+.verse {
+    font-size: 14pt;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    color: gold;
+    margin-left: 2cm;
+    margin-right: 2cm;
+}
+
+.chorus {
+    font-size: 14pt;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    color: gold;
+    margin-left: 4cm;
+    margin-right: 4cm;
+}

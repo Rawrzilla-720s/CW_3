@@ -1,0 +1,6 @@
+/* Exercise 1 - external stylesheet that sets body text to dark red */
+body {
+    color: darkred;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+}
