@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="CW 03 CSS Foundations Lab - exercises, debugging analysis and critical-thinking investigations by Suryaprakash Murugavvel.">
+<title>CW 03 - CSS Foundations Lab - Suryaprakash Murugavvel</title>
+<link rel="stylesheet" href="cw03.css">
+</head>
+<body>
+
+<header class="doc-head">
+  <div class="wrap">
+    <h1>CW 03 &mdash; CSS Foundations Lab</h1>
+    <p class="meta">Suryaprakash Murugavvel &middot; CSC 4370 Web Programming, Section 002 &middot; September 27, 2026</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Section navigation">
+  <div class="wrap">
+    <ul>
+      <li><a href="#info">Assignment Information</a></li>
+      <li><a href="#ex1">Ex 1</a></li>
+      <li><a href="#ex2">Ex 2</a></li>
+      <li><a href="#ex3">Ex 3</a></li>
+      <li><a href="#ex4">Ex 4</a></li>
+      <li><a href="#ex5">Ex 5</a></li>
+      <li><a href="#sources">Sources</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<section id="info">
+  <div class="wrap">
+    <h2>Assignment Information</h2>
+    <table class="data">
+      <tbody>
+        <tr><th scope="row">Student</th><td>Suryaprakash Murugavvel</td></tr>
+        <tr><th scope="row">Course</th><td>CSC 4370 &mdash; Web Programming, Georgia State University</td></tr>
+        <tr><th scope="row">Section</th><td>002 (CRN 82835)</td></tr>
+        <tr><th scope="row">Assignment</th><td>CW 03 &mdash; CSS Foundations Lab</td></tr>
+        <tr><th scope="row">Date</th><td>September 27, 2026</td></tr>
+        <tr><th scope="row">Level</th><td>Undergraduate (Exercises 1&ndash;5 and UG 01&ndash;04)</td></tr>
+      </tbody>
+    </table>
+    <h3>Files in this submission</h3>
+    <ul>
+      <li><code>murugavvel_suryaprakash_cw03.html</code> &mdash; this document</li>
+      <li><code>cw03.css</code> &mdash; stylesheet for this document</li>
+      <li><code>styles.css</code> &mdash; Exercise 1 external stylesheet</li>
+      <li><code>lyrics.css</code> &mdash; Exercise 4 external stylesheet</li>
+      <li><code>exercise2-debug.html</code> &mdash; isolated test bench used for Exercise 2</li>
+      <li><code>images/</code> &mdash; DevTools captures referenced below</li>
+    </ul>
+  </div>
+</section>
+
+<section id="ex1">
+  <div class="wrap">
+    <h2>Exercise 1 &mdash; External Style Sheet</h2>
+    <p class="lead">Changing text colour to dark red with an external stylesheet.</p>
+
+    <p>The stylesheet below is saved as <code>styles.css</code> and shipped with this submission.</p>
+<pre><code>/* External stylesheet for Exercise 1 */
+body {
+    color: darkred;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+}</code></pre>
+
+    <p>It is attached to an HTML document with a <code>&lt;link&gt;</code> element inside <code>&lt;head&gt;</code>:</p>
+<pre><code>&lt;link rel="stylesheet" href="styles.css"&gt;</code></pre>
+
+    <h3>Rendered result</h3>
+    <div class="demo-ex1">
+      <p>This paragraph demonstrates the dark red text colour applied via external CSS.</p>
+    </div>
+
+    <h3>Note on scoping</h3>
+    <p>
+      The supplied rule targets <code>body</code>, so linking <code>styles.css</code> into this page directly
+      would repaint every paragraph in the document dark red. The same three declarations are therefore applied
+      to a <code>.demo-ex1</code> container above, while <code>styles.css</code> ships unmodified. This is a
+      specificity and scope decision, not a change to the required CSS.
+    </p>
+  </div>
+</section>
+
+<section id="ex2">
+  <div class="wrap">
+    <h2>Exercise 2 &mdash; Debugging CSS</h2>
+    <p class="lead">Three defects identified in the supplied stylesheet, verified in Chrome DevTools.</p>
+
+    <div class="debug-report">
+      <h3>My Debugging Analysis</h3>
+
+      <div class="finding">
+        <h4>Finding 1 &mdash; heading hierarchy collapses</h4>
+        <p><span class="label">Original</span> <code>h1, h2, h3 { font-size: 2.5em; }</code></p>
+        <p><span class="label">Correction</span> <code>h1 { font-size: 2em; } h2 { font-size: 1.5em; } h3 { font-size: 1.17em; }</code></p>
+        <p><span class="label">Why</span>
+          Grouping all three heading levels into one rule overrides the browser default scale, so
+          <code>h1</code>, <code>h2</code> and <code>h3</code> render at an identical computed size.
+          The visual hierarchy that tells a reader which heading outranks which disappears, and screen-reader
+          users keep the structure only because the underlying tags are still correct.
+          TODO &mdash; insert the three identical computed px values you measured on the debug bench.
+        </p>
+      </div>
+
+      <div class="finding">
+        <h4>Finding 2 &mdash; missing semicolon terminates the rule early</h4>
+        <p><span class="label">Original</span> <code>color: red</code> (and <code>box-sizing: border-box</code>) with no trailing semicolon</p>
+        <p><span class="label">Correction</span> <code>color: red;</code> and <code>box-sizing: border-box;</code></p>
+        <p><span class="label">Why</span>
+          A missing semicolon on the final declaration is technically legal, but it is a latent fault: the moment
+          another declaration is added beneath it, the parser reads both as one malformed declaration and discards
+          them together. On the debug bench, adding <code>font-weight: bold</code> after the unterminated
+          <code>color: red</code> caused DevTools to strike through <em>both</em> declarations as invalid.
+        </p>
+      </div>
+
+      <div class="finding">
+        <h4>Finding 3 &mdash; red on ivory fails contrast</h4>
+        <p><span class="label">Original</span> <code>color: red;</code> on <code>background: ivory;</code></p>
+        <p><span class="label">Correction</span> <code>color: #8a0000;</code> on <code>background: ivory;</code></p>
+        <p><span class="label">Why</span>
+          Pure <code>red</code> (#FF0000) against <code>ivory</code> (#FFFFF0) measures <strong>3.96:1</strong>,
+          below the 4.5:1 WCAG AA threshold for normal-size body text. Darkening to #8A0000 raises it to
+          <strong>10.00:1</strong> while keeping the same red hue. The same defect repeats in the heading rule,
+          which uses <code>#ff0000</code>.
+        </p>
+      </div>
+    </div>
+
+    <h3>Corrected CSS</h3>
+<pre><code>body {
+    font-family: "Times New Roman", Times, serif;
+    margin-left: 20%;
+    margin-right: 20%;
+    text-align: justify;
+    background: ivory;
+    color: #8a0000;
+}
+
+h1 { font-size: 2em;    margin: 20px 0; color: #8a0000; }
+h2 { font-size: 1.5em;  margin: 18px 0; color: #8a0000; }
+h3 { font-size: 1.17em; margin: 16px 0; color: #8a0000; }
+
+.container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+a {
+    color: #0000EE;
+    text-decoration: underline;
+}</code></pre>
+
+    <div class="todo">
+      TODO &mdash; open <code>exercise2-debug.html</code>, confirm each finding in DevTools, and swap in your own
+      measured numbers. Candidate A on that page (font stack with no generic fallback) is a fourth defect you can
+      substitute for any of the three above if you find it easier to defend.
+    </div>
+  </div>
+</section>
+
+<section id="ex3">
+  <div class="wrap">
+    <h2>Exercise 3 &mdash; Song Lyrics Styling</h2>
+    <p class="lead">Applying the six required classes to a pop song.</p>
+
+    <div class="lyrics-demo">
+      <p class="song-title">Blinding Lights</p>
+      <p class="artist">The Weeknd</p>
+      <p class="album">After Hours</p>
+      <p class="year">2020</p>
+
+      <div class="verse">
+        <p>TODO &mdash; paste verse 1 lines here</p>
+      </div>
+
+      <div class="chorus">
+        <p>TODO &mdash; paste chorus lines here</p>
+      </div>
+
+      <div class="verse">
+        <p>TODO &mdash; paste verse 2 lines here</p>
+      </div>
+
+      <div class="chorus">
+        <p>TODO &mdash; paste chorus lines here</p>
+      </div>
+    </div>
+
+    <h3>Class specification</h3>
+    <table class="data">
+      <thead>
+        <tr><th scope="col">Class</th><th scope="col">Size</th><th scope="col">Font</th><th scope="col">Weight / style</th><th scope="col">Colour</th><th scope="col">Margins</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">.artist</th><td>14pt</td><td>Arial</td><td>Bold</td><td>Moccasin</td><td>&mdash;</td></tr>
+        <tr><th scope="row">.song-title</th><td>14pt</td><td>Arial</td><td>Normal</td><td>Khaki</td><td>&mdash;</td></tr>
+        <tr><th scope="row">.album</th><td>12pt</td><td>Arial</td><td>Normal</td><td>Khaki</td><td>&mdash;</td></tr>
+        <tr><th scope="row">.year</th><td>12pt</td><td>Arial</td><td>Bold</td><td>Ivory</td><td>&mdash;</td></tr>
+        <tr><th scope="row">.verse</th><td>14pt</td><td>Trebuchet MS</td><td>Bold</td><td>Gold</td><td>left 2cm, right 2cm</td></tr>
+        <tr><th scope="row">.chorus</th><td>14pt</td><td>Trebuchet MS</td><td>Bold + italic</td><td>Gold</td><td>left 4cm, right 4cm</td></tr>
+      </tbody>
+    </table>
+
+    <div class="todo">
+      TODO &mdash; replace the four placeholder blocks above with the actual lyric lines. The classes,
+      colours and margins are already correct, so the styling will apply as soon as the text is in place.
+    </div>
+  </div>
+</section>
+
+<section id="ex4">
+  <div class="wrap">
+    <h2>Exercise 4 &mdash; External Stylesheet for the Lyrics</h2>
+    <p class="lead">Moving the Exercise 3 rules into <code>lyrics.css</code>.</p>
+
+    <p>
+      <code>lyrics.css</code> ships with this submission and contains the body rule plus all six class rules
+      exactly as specified. A page using it links the file in <code>&lt;head&gt;</code>:
+    </p>
+<pre><code>&lt;link rel="stylesheet" href="lyrics.css"&gt;</code></pre>
+
+<pre><code>/* lyrics.css */
+body {
+    background-color: chocolate;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+.artist  { font-size: 14pt; font-family: Arial, sans-serif; font-weight: bold;   color: moccasin; }
+.song-title { font-size: 14pt; font-family: Arial, sans-serif; font-weight: normal; color: khaki; }
+.album   { font-size: 12pt; font-family: Arial, sans-serif; font-weight: normal; color: khaki; }
+.year    { font-size: 12pt; font-family: Arial, sans-serif; font-weight: bold;   color: ivory; }
+
+.verse {
+    font-size: 14pt;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    color: gold;
+    margin-left: 2cm;
+    margin-right: 2cm;
+}
+
+.chorus {
+    font-size: 14pt;
+    font-family: 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    color: gold;
+    margin-left: 4cm;
+    margin-right: 4cm;
+}</code></pre>
+
+    <h3>Why separate the stylesheet</h3>
+    <p>
+      Moving presentation out of the markup means the lyric page contains only content and class names. The same
+      stylesheet can then style any number of song pages, and a colour change happens in one file rather than in
+      every document. In this submission the <code>body</code> rule is scoped to a <code>.lyrics-demo</code>
+      container for the same reason given in Exercise 1 &mdash; the unmodified file is still included.
+    </p>
+  </div>
+</section>
+
+<section id="ex5">
+  <div class="wrap">
+    <h2>Exercise 5 &mdash; School Website Design</h2>
+    <p class="lead">A class timetable built with a semantic table, CSS variables and class-based colour coding.</p>
+
+    <h3>Colour scheme as CSS variables</h3>
+<pre><code>:root {
+  --lecture: #e4ebf2;
+  --lab:     #e6eee7;
+  --async:   #f1ece3;
+}
+
+.lecture { background-color: var(--lecture); }
+.lab     { background-color: var(--lab); }
+.async   { background-color: var(--async); }</code></pre>
+
+    <h3>Fall 2026 timetable</h3>
+    <div class="table-scroll">
+      <table class="timetable">
+        <caption>Weekly class schedule, Fall 2026 &mdash; colour coded by session type</caption>
+        <thead>
+          <tr>
+            <th scope="col">Time</th>
+            <th scope="col">Monday</th>
+            <th scope="col">Tuesday</th>
+            <th scope="col">Wednesday</th>
+            <th scope="col">Thursday</th>
+            <th scope="col">Friday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">11:00 &ndash; 12:15</th>
+            <td></td>
+            <td class="lecture">Functional Neuroimaging<span class="course-code">PHYS 4710</span></td>
+            <td></td>
+            <td class="lecture">Functional Neuroimaging<span class="course-code">PHYS 4710</span></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">12:30 &ndash; 2:15</th>
+            <td class="lab">Digital Image Processing<span class="course-code">CSC 4260</span></td>
+            <td></td>
+            <td class="lab">Digital Image Processing<span class="course-code">CSC 4260</span></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row">2:30 &ndash; 4:15</th>
+            <td class="lecture">Web Programming<span class="course-code">CSC 4370</span></td>
+            <td></td>
+            <td class="lecture">Web Programming<span class="course-code">CSC 4370</span></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Asynchronous courses</h3>
+    <p>
+      Two courses carry no fixed meeting time, so placing them in the grid above would misrepresent the
+      schedule. They are listed separately and share the <code>.async</code> class, which keeps one colour
+      key across both tables.
+    </p>
+    <table class="data">
+      <caption>Courses with no scheduled meeting time</caption>
+      <thead>
+        <tr><th scope="col">Course</th><th scope="col">Code</th><th scope="col">Hours</th><th scope="col">Delivery</th></tr>
+      </thead>
+      <tbody>
+        <tr class="async"><td>Human Communication</td><td>SCOM 1000, 088</td><td>2</td><td>Asynchronous</td></tr>
+        <tr class="async"><td>Scientific Perspectives on Global Problems</td><td>PERS 2002, 022</td><td>2</td><td>Asynchronous</td></tr>
+      </tbody>
+    </table>
+    <p class="lead">Total registered hours: 15.</p>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <h2>Sources and Assistance Statement</h2>
+    <ul>
+      <li>MDN Web Docs &mdash; <cite>Specificity</cite>, <cite>box-sizing</cite>, and <cite>Using media queries</cite>.</li>
+      <li>W3C &mdash; <cite>Web Content Accessibility Guidelines 2.1</cite>, success criteria 1.4.1 (Use of Color) and 1.4.3 (Contrast Minimum).</li>
+      <li>Chrome DevTools &mdash; Computed panel, box-model diagram, device toolbar, and the colour-picker contrast readout.</li>
+      <li>Course materials for CSC 4370 Web Programming, Fall 2026.</li>
+      <li>TODO &mdash; complete this statement to describe any assistance you received, per the assignment checklist.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="foot-line">Suryaprakash Murugavvel &mdash; CW 03 &mdash; Web Programming</p>
+  </div>
+</footer>
+
+</body>
+</html>
